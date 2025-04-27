@@ -164,5 +164,13 @@
 * **虚拟环境名称:** 如果你想更改虚拟环境的名称 (`.venv-combined-resolve`)，需要在 `restore_env.sh` 和 `run_after_reboot.sh` 中都修改 `TARGET_VENV_DIR` 变量。
 * **RKNN 系统依赖:** **这是最可能需要你根据实际情况定制的部分。** 在 `run_after_reboot.sh` 的系统安装部分，找到安装 RKNN 运行时依赖的占位符位置，添加你从官方文档或厂商获取的实际安装命令。
 
-通过遵循本指南和这些脚本，您应该能够在您的计算云环境中建立一个可靠且易于管理的持久化 Python 工作环境。
+注意所有脚本中没有包含：
+To activate the environment in your current shell, run:
+source /root/data/persistent/.venv-combined-resolve/bin/activate
+
+Once activated, you can run your python scripts (e.g., python check_pytorch.py, yolo predict...).
+Remember to use 'screen' or 'tmux' for long-running tasks!
+
+这是因为虚拟环境和环境变量，只能由父传递给子， 执行两个脚本的时候实际上是调起两个子进程去执行的，所以在子进程内进入虚拟环境，退出后父进程是没有虚拟环境的。
+换句话说，执行完之后的环境变量和虚拟环境，就消失了。 回到父进程，也就是你现在的 shell，什么都没有。
 
