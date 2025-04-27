@@ -1,0 +1,4 @@
+# requirements_combined.txt
+torch<=2.4
+rknn-toolkit2
+ultralytics
